@@ -7,6 +7,7 @@ public class Translator {
     public static String getTranslation(String toTranslate, String srcLang, String trgLang) throws IOException{
     String translated;
     Runtime runtime = Runtime.getRuntime();
+
     srcLang = getLanguageAcronym(srcLang);
     trgLang = getLanguageAcronym(trgLang);
 
@@ -15,6 +16,7 @@ public class Translator {
                 + "\"-d source_lang" + srcLang + "\" -d\"target_lang=" + trgLang + "\"");
 
         translated = IOUtils.toString(translate.getInputStream());
+
         if(translated.length()>45){
             translated = translated.substring(58,translated.length()-4);
         }
@@ -32,7 +34,6 @@ public class Translator {
             case "russian" -> output = "RU";
             case "italian" -> output = "IT";
         }
-
         return output;
     }
 }

@@ -10,12 +10,13 @@ import java.io.IOException;
 import java.util.*;
 
 public class WebCrawler {
-    private final LinkedList<String>urlLinks;  //Here are stored all the links found in the page
+    private final LinkedList<String>urlLinks;  //Here are stored all the links and headings found in the page
     private final LinkedList<String> headings;
     private int MAX_DEPTH = 2;
 
     private String srcLanguage;
     private String trgLanguage;
+
     private int depth;
 
     public WebCrawler() {
@@ -32,8 +33,11 @@ public class WebCrawler {
                     urlLinks.add(Url);
 
                     getHeadings(Url);
+
                     writeToFile();
+
                     depth = tempDepth++;
+
                     for (Element link : availableLinksOnPage) { //for each of the URLs execute recursively the function
                         if(tempDepth < MAX_DEPTH){
                             getPageLinks(link.attr("abs:href"), tempDepth);
@@ -54,7 +58,7 @@ public class WebCrawler {
             for(int headerCounter = 1; headerCounter < 6; headerCounter++ ) {
                 Elements headers = doc.select("h" + headerCounter);
                 for (Element header : headers) {
-                    headings.add("H" + headerCounter + ": " + Translator.getTranslation(header.text(),srcLanguage,trgLanguage));
+                    headings.add("--> H" + headerCounter + ": " + Translator.getTranslation(header.text(),srcLanguage,trgLanguage));
                 }
             }
     }

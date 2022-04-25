@@ -28,14 +28,16 @@ public class TestCrawler {
         assertEquals(webCrawler.getUrlLink( 0),"https://www.forbes.com/");
     }
 
+    @Test
     public void checkOutputFile() throws IOException {
 
         webCrawler = new WebCrawler();
 
         webCrawler.setSrcLanguage("english");
         webCrawler.setTrgLanguage("german");
+        webCrawler.setMAX_DEPTH(2);
 
-        File file = new File("/Users/baciiu/Documents/GitHub/CleanCode_WebCrawler_SS22/output.md");
+        File file = new File("output.md");
 
         boolean exist = false;
         if (file.exists()){
@@ -43,9 +45,9 @@ public class TestCrawler {
         }
         assertEquals(true,exist);
 
-        webCrawler.getPageLinks("www.forbes.com",0);
+        webCrawler.getPageLinks("https:/www.forbes.com",0);
 
-        file = new File("/Users/baciiu/Documents/GitHub/CleanCode_WebCrawler_SS22/output.md");
+        file = new File("output.md");
 
         boolean isEmpty = false;
 

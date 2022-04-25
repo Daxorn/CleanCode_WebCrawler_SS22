@@ -76,7 +76,12 @@ public class WebCrawler {
             writer.close();
 
     }
-
+    public String getHeading(int index){
+        return headings.get(index);
+    }
+    public String getUrlLink(int index){
+        return urlLinks.get(index);
+    }
     public void setSrcLanguage(String src){
       srcLanguage = src;
     }

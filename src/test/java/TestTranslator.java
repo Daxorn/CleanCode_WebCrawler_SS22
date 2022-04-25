@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 
 
-public class TranslatorTest {
+public class TestTranslator {
 
     private Translator translator;
 

@@ -40,21 +40,27 @@ public class TestCrawler {
         File file = new File("output.md");
 
         boolean exist = false;
+
         if (file.exists()){
             exist = true;
         }
         assertEquals(true,exist);
-
-        webCrawler.getPageLinks("https:/www.forbes.com",0);
-
-        file = new File("output.md");
 
         boolean isEmpty = false;
 
         if (file.length() == 0 ){
             isEmpty = true;
         }
-        assertEquals(true, isEmpty);
+
+        isEmpty = false;
+
+        webCrawler.getPageLinks("https:/www.forbes.com",0);
+
+        if (file.length() == 0 ){
+            isEmpty = true;
+        }
+
+        assertEquals(false, isEmpty);
     }
 
     @AfterEach

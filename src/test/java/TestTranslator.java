@@ -12,7 +12,6 @@ public class TestTranslator {
     private Translator translator;
 
     @BeforeEach
-
     public void setUp(){
         translator = new Translator("english", "german");
     }
@@ -34,6 +33,11 @@ public class TestTranslator {
     @AfterAll
     public void tearDown(){
         translator = null ;
+    }
+
+    public static void main(String[] args) throws IOException {
+        TestTranslator testTranslator = new TestTranslator();
+        testTranslator.getTextTranslated();
     }
 }
 

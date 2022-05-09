@@ -14,7 +14,7 @@ public class TestTranslator {
     @BeforeEach
 
     public void setUp(){
-        translator = new Translator();
+        translator = new Translator("english", "german");
     }
 
     @Test
@@ -25,9 +25,10 @@ public class TestTranslator {
 
         String english = "english";
         String german = "german";
-
-        assertEquals(germanString, translator.getTranslation(englishString,english,german));
-        assertEquals(englishString, translator.getTranslation(germanString,german,english));
+        Translator ts = new Translator(english,german);
+        assertEquals(germanString, ts.getTranslation(englishString));
+        ts.setLang(german,english);
+        assertEquals(englishString, ts.getTranslation(germanString));
     }
 
     @AfterAll

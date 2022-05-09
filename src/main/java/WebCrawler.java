@@ -38,16 +38,19 @@ public class WebCrawler {
 
                     depth = tempDepth++;
 
-                    for (Element link : availableLinksOnPage) { //for each of the URLs execute recursively the function
-                        if(tempDepth < MAX_DEPTH){
-                            getPageLinks(link.attr("abs:href"), tempDepth);
-                        }else{
-                            break;
-                        }
-                    }
+                    getChildrenLinks(availableLinksOnPage,tempDepth);
                 }
     }
 
+    public void getChildrenLinks(Elements links, int depth) throws IOException {
+        for (Element link : links) { //for each of the URLs execute recursively the function
+            if(depth < MAX_DEPTH){
+                getPageLinks(link.attr("abs:href"), depth);
+            }else{
+                break;
+            }
+        }
+    }
 
     public void setMAX_DEPTH(int MAX_DEPTH) {
         this.MAX_DEPTH = MAX_DEPTH;
@@ -55,13 +58,15 @@ public class WebCrawler {
 
     public void getHeadings(String Url) throws IOException {
             Document doc = Jsoup.connect(Url).get();
+            Translator ts = new Translator(srcLanguage,trgLanguage);
             for(int headerCounter = 1; headerCounter < 6; headerCounter++ ) {
                 Elements headers = doc.select("h" + headerCounter);
                 for (Element header : headers) {
-                    headings.add("--> H" + headerCounter + ": " + Translator.getTranslation(header.text(),srcLanguage,trgLanguage));
+                    headings.add("--> H" + headerCounter + ": " + ts.getTranslation(header.text()));
                 }
             }
     }
+
     public void writeToFile() throws IOException {
             BufferedWriter writer = new BufferedWriter(new FileWriter("output.md"));
 
@@ -76,9 +81,11 @@ public class WebCrawler {
             writer.close();
 
     }
+
     public String getHeading(int index){
         return headings.get(index);
     }
+
     public String getUrlLink(int index){
         return urlLinks.get(index);
     }

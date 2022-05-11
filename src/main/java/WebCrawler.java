@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class WebCrawler {
-    private final LinkedList<String>urlLinks;  //Here are stored all the links and headings found in the page
+    private final LinkedList<String> urlLinks;
     private final LinkedList<String> headings;
     private int MAX_DEPTH = 2;
 
@@ -18,21 +18,25 @@ public class WebCrawler {
     private String trgLanguage;
 
     private int depth;
+    private Elements availableLinksOnPage;
 
     public WebCrawler() {
             urlLinks = new LinkedList<>();
             headings = new LinkedList<>();
     }
+    public void crawl(LinkedList<String> urls) throws IOException {
+        for(String url: urls){
+            getPageLinks("https://" + url, 0);
+        }
+    }
 
     public void getPageLinks(String Url, int tempDepth) throws IOException {
-            Document doc = Jsoup.connect(Url).get();
-            Elements availableLinksOnPage = doc.select("a[href]");
-
+           getLinksFrom(Url);
                 if (!urlLinks.contains(Url) && tempDepth <= MAX_DEPTH) {
 
                     urlLinks.add(Url);
 
-                    getHeadings(Url);
+                    getTranslatedHeadings(Url);
 
                     writeToFile();
 
@@ -41,9 +45,12 @@ public class WebCrawler {
                     getChildrenLinks(availableLinksOnPage,tempDepth);
                 }
     }
-
+    public void getLinksFrom(String Url) throws IOException {
+        Document doc = Jsoup.connect(Url).get();
+        availableLinksOnPage = doc.select("a[href]");
+    }
     public void getChildrenLinks(Elements links, int depth) throws IOException {
-        for (Element link : links) { //for each of the URLs execute recursively the function
+        for (Element link : links) {
             if(depth < MAX_DEPTH){
                 getPageLinks(link.attr("abs:href"), depth);
             }else{
@@ -56,7 +63,7 @@ public class WebCrawler {
         this.MAX_DEPTH = MAX_DEPTH;
     }
 
-    public void getHeadings(String Url) throws IOException {
+    public void getTranslatedHeadings(String Url) throws IOException {
             Document doc = Jsoup.connect(Url).get();
             Translator ts = new Translator(srcLanguage,trgLanguage);
             for(int headerCounter = 1; headerCounter < 6; headerCounter++ ) {
@@ -74,17 +81,15 @@ public class WebCrawler {
             writer.write("<br>depth: " + depth + "\n");
             writer.write("<br>source language: " + srcLanguage + "\n");
             writer.write("<br>target language: " + trgLanguage + "\n");
-            writer.write("<br>summary: " + "\n");
+            writer.write("<br>summary:\n ");
             for (String heading : headings) {
-                writer.write(heading+"\n");
+                writer.write("<br>" +heading + "\n");
             }
+            headings.clear();
             writer.close();
 
     }
 
-    public String getHeading(int index){
-        return headings.get(index);
-    }
 
     public String getUrlLink(int index){
         return urlLinks.get(index);

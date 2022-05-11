@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestCrawler {
 
@@ -44,7 +45,7 @@ public class TestCrawler {
         if (file.exists()){
             exist = true;
         }
-        assertEquals(true,exist);
+        assertTrue(exist);
 
         boolean isEmpty = false;
 
@@ -60,7 +61,7 @@ public class TestCrawler {
             isEmpty = true;
         }
 
-        assertEquals(false, isEmpty);
+        assertFalse(isEmpty);
     }
 
     @AfterEach

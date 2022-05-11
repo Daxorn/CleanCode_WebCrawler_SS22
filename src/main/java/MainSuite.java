@@ -1,22 +1,25 @@
 import java.io.IOException;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class MainSuite {
 
-    private static String url = "";
+    private static LinkedList<String> urls;
     private static String srcLanguage = "";
     private static String trgLanguage = "";
     private static WebCrawler wbc;
+    private static int numberOfSites = 0;
 
     static Scanner scan = new Scanner(System.in);
+
     public static void main(String[] args) throws IOException {
         runWebCrawler();
     }
 
     public static void runWebCrawler() {
         try {
-            wbc = new WebCrawler();
+                wbc = new WebCrawler();
                 greet();
                 getUserInputs();
                 setLanguages();
@@ -28,7 +31,7 @@ public class MainSuite {
 
     private static void startCrawl() throws IOException {
         try {
-            wbc.getPageLinks("https://" + url, 0);
+            wbc.crawl(urls);
         }catch (IOException e){
             System.out.println("Cannot connect to wbc: " + e.getMessage());
         }
@@ -39,12 +42,19 @@ public class MainSuite {
     }
 
     private static void getUserInputs(){
-        System.out.println("Please insert a URL to probe:");
-        url = scan.nextLine();
+        System.out.println("Please insert the number of URLs to probe:");
+        numberOfSites = scan.nextInt();
+        getUrls();
         System.out.println("Please insert a source language:");
         srcLanguage = scan.nextLine();
         System.out.println("Please insert a target language:");
         trgLanguage = scan.nextLine();
+    }
+    private static void getUrls(){
+        for(int i = 0; i < numberOfSites; i++){
+            System.out.println("Please insert an URL to probe:");
+            urls.add(scan.nextLine());
+        }
     }
     private static void greet(){ System.out.println("Welcome to Headings Translator");}
 }

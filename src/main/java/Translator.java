@@ -5,7 +5,8 @@ import java.util.Locale;
 
 public class Translator {
     public String srcLang;
-   public String trgLang;
+    public String trgLang;
+
 
     public Translator(String srcLang, String trgLang){
        setLang(srcLang,trgLang);
@@ -21,9 +22,11 @@ public class Translator {
 
         String translated = IOUtils.toString(translate.getInputStream());
 
-        if(translated.length()>45){
-            translated = translated.substring(58, translated.length()-4);
-        }
+        translated = translated.substring(58, translated.length()-4);
+        //Since the response from the DeeplAPI is a JSON file, the translated text is stored after 58 chars
+        //in the JSON file, and the last 4 chars are not needed. Using variables for such thing seemed a waste
+        //of memory, hence the "Magical Numbers
+
 
 
     return translated;

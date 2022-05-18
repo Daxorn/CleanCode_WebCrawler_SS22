@@ -17,7 +17,7 @@ public class TestTranslator {
     }
 
     @Test
-    public void getTextTranslated() throws IOException {
+    public void getTextTranslated() {
 
         String englishString = "Hello World!";
         String germanString = "Hallo Welt!";

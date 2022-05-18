@@ -18,7 +18,7 @@ public class TestCrawler {
 
 
     @Test
-    public void getPageLinks() throws IOException {
+    public void getPageLinks() throws Exception {
 
         webCrawler = new WebCrawler();
 
@@ -30,7 +30,7 @@ public class TestCrawler {
     }
 
     @Test
-    public void checkOutputFile() throws IOException {
+    public void checkOutputFile() throws Exception {
 
         webCrawler = new WebCrawler();
 
@@ -69,7 +69,7 @@ public class TestCrawler {
         webCrawler = null ;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         TestCrawler testCrawler = new TestCrawler();
 
         testCrawler.getPageLinks();

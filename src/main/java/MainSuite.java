@@ -1,4 +1,4 @@
-import java.io.IOException;
+
 
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -13,7 +13,7 @@ public class MainSuite {
 
     static Scanner scan = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         runWebCrawler();
     }
 
@@ -24,15 +24,15 @@ public class MainSuite {
                 getUserInputs();
                 setLanguages();
                 startCrawl();
-        }catch(IOException e){
+        }catch(Exception e){
             System.out.println("Main Suite Problem: " + e.getMessage());
         }
     }
 
-    private static void startCrawl() throws IOException {
+    private static void startCrawl() {
         try {
             wbc.crawl(urls);
-        }catch (IOException e){
+        }catch (Exception e){
             System.out.println("Cannot connect to wbc: " + e.getMessage());
         }
     }

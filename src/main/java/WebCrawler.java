@@ -14,6 +14,7 @@ public class WebCrawler {
     private int MAX_DEPTH = 2;
 
     private String srcLanguage;
+
     private String trgLanguage;
 
     private int depth;
@@ -23,7 +24,7 @@ public class WebCrawler {
             urlLinks = new LinkedList<>();
             headings = new LinkedList<>();
     }
-    public void crawl(LinkedList<String> urls) throws Exception {
+    public void crawlLinks(LinkedList<String> urls) throws Exception {
         try {
             for (String url : urls) {
                 getPageLinks("https://" + url, 0);
@@ -42,7 +43,7 @@ public class WebCrawler {
 
                     urlLinks.add(Url);
 
-                    getTranslatedHeadings(Url);
+                    getTranslatedHeadingsFrom(Url);
 
                     writeToFile();
 
@@ -81,7 +82,7 @@ public class WebCrawler {
         this.MAX_DEPTH = MAX_DEPTH;
     }
 
-    public void getTranslatedHeadings(String Url) throws Exception {
+    public void getTranslatedHeadingsFrom(String Url) throws Exception {
         try {
             Document doc = Jsoup.connect(Url).get();
             Translator ts = new Translator(srcLanguage, trgLanguage);

@@ -15,11 +15,7 @@ public class Translator {
         try {
             Runtime runtime = Runtime.getRuntime();
 
-            Process translate = runtime.exec("curl https://api-free.deepl.com/v2/translate \n"
-                    + "-d auth_key=40d04072-cf15-ca24-3658-42dd1279fb94:fx -d \"text=" + toTranslate + "\"\n"
-                    + "\"-d source_lang" + srcLang + "\" -d\"target_lang=" + trgLang + "\"");
-
-            String translated = IOUtils.toString(translate.getInputStream());
+            String translated = IOUtils.toString(execTranslation(runtime,toTranslate).getInputStream());
 
             translated = translated.substring(58, translated.length() - 4);
             //Since the response from the DeeplAPI is a JSON file, the translated text is stored after 58 chars
@@ -33,7 +29,17 @@ public class Translator {
             return "No translation executed";
         }
     }
-
+    public Process execTranslation(Runtime runtime, String toTranslate){
+        try {
+            Process translate = runtime.exec("curl https://api-free.deepl.com/v2/translate \n"
+                    + "-d auth_key=40d04072-cf15-ca24-3658-42dd1279fb94:fx -d \"text=" + toTranslate + "\"\n"
+                    + "\"-d source_lang" + srcLang + "\" -d\"target_lang=" + trgLang + "\"");
+            return translate;
+        }catch(Exception e){
+            System.out.println("Translation Problem: " + e.getMessage());
+            return null;
+        }
+    }
     public void setLang(String srcLang, String trgLang){
         this.srcLang = getLanguageAcronym(srcLang);
         this.trgLang = getLanguageAcronym(trgLang);

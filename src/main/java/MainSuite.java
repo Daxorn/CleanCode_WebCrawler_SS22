@@ -1,5 +1,4 @@
 
-
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -14,6 +13,7 @@ public class MainSuite {
     static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
+        urls = new LinkedList<>();
         runWebCrawler();
     }
 
@@ -31,7 +31,7 @@ public class MainSuite {
 
     private static void startCrawl() {
         try {
-            wbc.crawl(urls);
+            wbc.crawlLinks(urls);
         }catch (Exception e){
             System.out.println("Cannot connect to wbc: " + e.getMessage());
         }

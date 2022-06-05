@@ -8,7 +8,7 @@ import java.io.FileWriter;
 
 import java.util.*;
 
-public class WebCrawler {
+public class WebCrawler{
     private final LinkedList<String> urlLinks;
     private final LinkedList<String> headings;
     private int MAX_DEPTH = 2;
@@ -24,11 +24,10 @@ public class WebCrawler {
             urlLinks = new LinkedList<>();
             headings = new LinkedList<>();
     }
-    public void crawlLinks(LinkedList<String> urls) throws Exception {
+
+    public void crawlLinks(String url) throws Exception {
         try {
-            for (String url : urls) {
                 getPageLinks("https://" + url, 0);
-            }
         }catch(Exception e){
             BufferedWriter writer = new BufferedWriter(new FileWriter("output.md"));
             writer.write("Could not crawl | " + e.getMessage());

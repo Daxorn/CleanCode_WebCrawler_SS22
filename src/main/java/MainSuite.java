@@ -1,37 +1,46 @@
 
-import java.util.LinkedList;
 import java.util.Scanner;
 
-public class MainSuite {
+public class MainSuite extends Thread {
 
-    private static LinkedList<String> urls;
+    private static String url;
     private static String srcLanguage = "";
     private static String trgLanguage = "";
     private static WebCrawler wbc;
-    private static int numberOfSites = 0;
+    private Thread t;
+
 
     static Scanner scan = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        urls = new LinkedList<>();
-        runWebCrawler();
-    }
+    public void run(){
+            runWebCrawler();
+            System.out.println("Thread exiting.");
 
+    }
+    public void start(){
+        System.out.println("Starting thread");
+        if (t == null){
+            t = new Thread(this);
+            t.start();
+        }
+    }
     public static void runWebCrawler() {
-        try {
+        synchronized (wbc) {
+            try {
                 wbc = new WebCrawler();
                 greet();
                 getUserInputs();
                 setLanguages();
                 startCrawl();
-        }catch(Exception e){
-            System.out.println("Main Suite Problem: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Main Suite Problem: " + e.getMessage());
+            }
         }
     }
 
     private static void startCrawl() {
         try {
-            wbc.crawlLinks(urls);
+            wbc.crawlLinks(url);
         }catch (Exception e){
             System.out.println("Cannot connect to wbc: " + e.getMessage());
         }
@@ -42,19 +51,13 @@ public class MainSuite {
     }
 
     private static void getUserInputs(){
-        System.out.println("Please insert the number of URLs to probe:");
-        numberOfSites = scan.nextInt();
-        getUrls();
+        System.out.println("Please insert the URL to probe:");
+        url = scan.nextLine();
         System.out.println("Please insert a source language:");
         srcLanguage = scan.nextLine();
         System.out.println("Please insert a target language:");
         trgLanguage = scan.nextLine();
     }
-    private static void getUrls(){
-        for(int i = 0; i < numberOfSites; i++){
-            System.out.println("Please insert an URL to probe:");
-            urls.add(scan.nextLine());
-        }
-    }
+
     private static void greet(){ System.out.println("Welcome to Headings Translator");}
 }

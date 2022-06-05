@@ -39,6 +39,14 @@ public class TestTranslator {
         TestTranslator testTranslator = new TestTranslator();
         testTranslator.getTextTranslated();
     }
+
+    public Translator getTranslator() {
+        return translator;
+    }
+
+    public void setTranslator(Translator translator) {
+        this.translator = translator;
+    }
 }
 
 

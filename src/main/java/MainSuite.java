@@ -9,16 +9,18 @@ public class MainSuite extends Thread {
     private static WebCrawler wbc;
     private Thread t;
 
-
     static Scanner scan = new Scanner(System.in);
 
+    public MainSuite(){
+        wbc = new WebCrawler();
+    }
     public void run(){
             runWebCrawler();
-            System.out.println("Thread exiting.");
+            System.out.println(this.getName() + " exiting.");
 
     }
     public void start(){
-        System.out.println("Starting thread");
+        System.out.println("Starting " + this.getName());
         if (t == null){
             t = new Thread(this);
             t.start();
@@ -27,7 +29,6 @@ public class MainSuite extends Thread {
     public static void runWebCrawler() {
         synchronized (wbc) {
             try {
-                wbc = new WebCrawler();
                 greet();
                 getUserInputs();
                 setLanguages();

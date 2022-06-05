@@ -123,10 +123,16 @@ public class WebCrawler{
     public String getUrlLink(int index){
         return urlLinks.get(index);
     }
+
     public void setSrcLanguage(String src){
       srcLanguage = src;
     }
     public void setTrgLanguage(String trg){
         trgLanguage = trg;
     }
+
+    public String getSrcLanguage(){return srcLanguage;}
+    public String getTrgLanguage(){return trgLanguage;}
+
+    public int getMAX_DEPTH(){return  MAX_DEPTH;}
 }

@@ -25,7 +25,7 @@ public class TestCrawler {
         webCrawler.setTrgLanguage("german");
         webCrawler.setMAX_DEPTH(2);
         webCrawler.getPageLinks("https://forbes.com",0);
-        assertEquals(webCrawler.getUrlLink( 0),"https://www.forbes.com/");
+        assertEquals("https://www.forbes.com/",webCrawler.getUrlLink( 0));
     }
 
     @Test
@@ -62,6 +62,24 @@ public class TestCrawler {
 
         assertFalse(isEmpty);
     }
+    @Test
+    public void testLanguages(){
+        String testSrc = "English";
+        String testTrg = "German";
+        webCrawler.setSrcLanguage(testSrc);
+        webCrawler.setSrcLanguage(testTrg);
+
+        assertEquals(testSrc, webCrawler.getSrcLanguage());
+        assertEquals(testTrg, webCrawler.getTrgLanguage());
+    }
+
+    @Test
+    public void testMaxDepth(){
+        int maxDepth = 2;
+        webCrawler.setMAX_DEPTH(maxDepth);
+
+        assertEquals(maxDepth,webCrawler.getMAX_DEPTH());
+    }
 
     @AfterEach
     public void tearDown(){
@@ -70,9 +88,9 @@ public class TestCrawler {
 
     public static void main(String[] args) throws Exception {
         TestCrawler testCrawler = new TestCrawler();
-
         testCrawler.getPageLinks();
         testCrawler.checkOutputFile();
+        testCrawler.testLanguages();
     }
 
 
